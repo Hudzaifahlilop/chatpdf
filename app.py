@@ -9,10 +9,10 @@ from langchain.agents import load_tools
 from langchain.callbacks import StreamlitCallbackHandler
 from langchain.vectorstores import faiss
 from langchain.chains import ConversationalRetrievalChain
-# from htmlTemplates import css, bot_template, user_template
-import time
 import os
+import time
 
+openai_api_key = os.environ.get('OPENAI_API_KEY')
 # FUNG UNTUK MEMBUAT PDF MENJADI TEXT
 def get_pdf_text(pdf_docs):
     #   membuat string  kosong untuk menampung text
@@ -38,13 +38,13 @@ def get_chunk_text(text):
      return chunks
      
 def get_vectorstore(text_chunk):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     # embeddings = HuggingFaceInstructEmbeddings(model_name='hkunlp/instructor-xl')
     vectorstore = faiss.FAISS.from_texts(texts=text_chunk, embedding=embeddings)
     return vectorstore
 
 def get_conversation_chain(vectorstore):
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=openai_api_key, streaming=True)
     # memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
@@ -55,8 +55,6 @@ def get_conversation_chain(vectorstore):
 
 def main():
     load_dotenv()
-
-    openai_api_key = os.environ.get('OPENAI_API_KEY')
 
     st.set_page_config(page_title='Talking PDF')
 
