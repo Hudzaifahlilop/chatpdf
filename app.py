@@ -56,7 +56,7 @@ def get_conversation_chain(vectorstore):
 def main():
     load_dotenv()
 
-    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+    openai_api_key = os.environ.get('OPENAI_API_KEY')
 
     st.set_page_config(page_title='Talking PDF')
 
