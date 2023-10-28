@@ -11,6 +11,7 @@ from langchain.vectorstores import faiss
 from langchain.chains import ConversationalRetrievalChain
 # from htmlTemplates import css, bot_template, user_template
 import time
+import os
 
 # FUNG UNTUK MEMBUAT PDF MENJADI TEXT
 def get_pdf_text(pdf_docs):
@@ -54,6 +55,8 @@ def get_conversation_chain(vectorstore):
 
 def main():
     load_dotenv()
+
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 
     st.set_page_config(page_title='Talking PDF')
 
