@@ -100,7 +100,7 @@ def main():
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
     with st.sidebar:
-            st.subheader('Your Document')
+            st.subheader('Your Document Here')
             pdf_docs = st.file_uploader('Upload Your Documents Here and Click on "process"', accept_multiple_files=True)
             button = st.button('PROCESS')
             if button:
